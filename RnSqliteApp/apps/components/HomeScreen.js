@@ -14,24 +14,24 @@ const HomeScreen = ({navigation}) => {
     useEffect(() => {
         db.transaction(function(txn) {
             txn.executeSql(
-                " SELECT name FROM sqlite_master WHERE type='table' AND name='table_user '",
+                " SELECT name FROM sqlite_master WHERE type='table' AND name='table_user'",
                 [],
                 function(tx, res) {
                     console.log('item:', res.rows.length);
                     if (res.rows.length === 0 ) {
                         txn.executeSql("DROP TABLE IF EXISTS table_user", []);
                         txn.executeSql(`CREATE TABLE if NOT EXISTS table_user (
-                            user_id	INTEGER PRIMARY KEY  AUTOINCREMENT,
-                            user_name	TEXT NOT NULL,
-                            user_contact	TEXT,
-                            user_address	TEXT NOT NULL
-                        )
+                                 user_id	INTEGER PRIMARY KEY AUTOINCREMENT,
+                                user_name	TEXT NOT NULL,
+                             user_contact	TEXT,
+                             user_address	TEXT NOT NULL
+                            )
                         `, []);
                         console.log('table regen!');                    }
-                }
-            );
-        });
-    });
+                    }
+                );
+            });
+        }, []);
 
     return (
         <SafeAreaView style={{flex:1}}>
@@ -42,11 +42,17 @@ const HomeScreen = ({navigation}) => {
                     onButtonClick={() => navigation.navigate('Register')}
                 />
                 <MyButton title="사용자 전체 조회"
-                    onButtonClick={()=> navigation.navigate('ViewAllUsers')} />
+                    onButtonClick={()=> navigation.navigate('ViewAllUsers')}
+                />
                 <MyButton title="사용자 조회"
-                    onButtonClick={()=> navigation.navigate('ViewUser')} />
-                <MyButton title="사용자 수정" />
-                <MyButton title="사용자 삭제" />
+                    onButtonClick={()=> navigation.navigate('ViewUser')}
+                />
+                <MyButton title="사용자 수정"
+                    onButtonClick={()=> navigation.navigate('UpdateUser')}
+                />
+                <MyButton title="사용자 삭제"
+                    onButtonClick={()=> navigation.navigate('DeleteUser')}
+                />
             </View>
         </SafeAreaView>
     );

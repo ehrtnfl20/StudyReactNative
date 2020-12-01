@@ -7,6 +7,8 @@ import HomeScreen from './components/HomeScreen';
 import RegisterUser from './components/RegisterUser';
 import ViewAllUsers from './components/ViewAllUser';
 import ViewUsers from './components/ViewUser';
+import UpdateUsers from './components/UpdateUser';
+import DeleteUser from './components/DeletUser';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +63,34 @@ const App = () => {
           component={ViewUsers}
           options={{
             title: '사용자 조회',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: '#ffffff',
+            },
+            headerStyle: {
+              backgroundColor: '#1877f2',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="UpdateUser"
+          component={UpdateUsers}
+          options={{
+            title: '사용자 수정',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: '#ffffff',
+            },
+            headerStyle: {
+              backgroundColor: '#1877f2',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="DeleteUser"
+          component={DeleteUser}
+          options={{
+            title: '사용자 삭제',
             headerTitleStyle: {
               fontWeight: 'bold',
               color: '#ffffff',

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import {SafeAreaView, View, Text, FlatList, ScrollView} from 'react-native';
+import {SafeAreaView, View, Text, ScrollView} from 'react-native';
 
 import {openDatabase} from 'react-native-sqlite-storage';
 
@@ -28,19 +28,20 @@ let [listItems, setListItems] = useState([]);
         });
     }, []);
 
+    const newListItems = listItems.map((item, index) =>
+        <View  key={index} style={{ borderBottomColor: '#0000ff', borderBottomWidth: 1 }}>
+            <Text children={item.user_id} />
+            <Text children={item.user_name} />
+            <Text children={item.user_contact} />
+            <Text children={item.user_address} />
+        </View>
+    );
+
     return (
         <SafeAreaView style={{flex: 1}}>
             <ScrollView>
                 <View style={{flex: 1}}>
-                    {listItems.map((item, index) => {
-                        return (
-                            <View  key={index} style={{ borderBottomColor: '#0000ff', borderBottomWidth: 1 }}>
-                                <Text children={item.user_name} />
-                                <Text children={item.user_contact} />
-                                <Text children={item.user_address} />
-                            </View>
-                        );
-                    })}
+                    {newListItems}
                 </View>
                 <MyButton title="메인으로" onButtonClick={() => navigation.navigate('HomeScreen')} />
             </ScrollView>
