@@ -1,13 +1,36 @@
+import React, {Component} from 'react';
+import {View, StyleSheet} from 'react-native';
+import CoinView from './components/CoinView';
+import TopBar from './components/TopBar';
 
-import React from 'react';
-import {View, Text} from 'react-native';
+export default class App extends Component {
+  constructor(props) {
+    super(props);
 
-const App = () => {
-  return (
-    <View>
-      <Text children="Hello"  />
-    </View>
-  );
-};
+    this.state = {
+      title: '실시간 비트코인 정보',
+      refreshDate: '-',
+    };
+  }
 
-export default App;
+  componentDidMount() {
+    const now = new Date().toLocaleString('ko-KR', {timeZone: 'Asia/Seoul'});
+      this.setState({ refreshDate : now });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <TopBar title={this.state.title} refreshDate={this.state.refreshDate} />
+        <CoinView />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#e9e9e9',
+  },
+});
