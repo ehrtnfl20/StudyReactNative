@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 
 export default class CoinItem extends Component {
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
   render() {
     return (
       <View style={styles.subContainer}>
         <Image source={require('../images/bitcoin.png')} style={styles.coin} />
         <View style={styles.coinDetail}>
-          <Text children={this.props.name} style={{fontSize:20, textAlign: 'left'}}/>
-          <Text children={'vol:' + this.props.volumn} style={{color: 'gray'}} />
-          <Text children={this.props.price} />
-          <Text children={'#: ' + this.props.rank} style={{fontSize: 20}} />
+          <Text children={this.props.name} style={styles.coinName} />
+          <Text children={`vol: ${this.numberWithCommas(Number(this.props.volumn))}`} style={{color: 'gray'}} />
+          <Text children={`$ ${this.numberWithCommas(Number(this.props.price))}`} />
+          <Text children={'#' + this.props.rank} style={{fontSize: 20}} />
         </View>
       </View>
     );
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   box: {
-    backgroundColor: '#0000ff',
+    backgroundColor: '#808080',
     width: 50,
     height: 50,
   },
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '97.5%',
     height: 90,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#ffff99',
     alignItems: 'center',
     justifyContent: 'space-around',
     marginTop: 5,
@@ -51,5 +55,10 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  coinName: {
+    fontSize: 20,
+    width: 100,
+    fontWeight: 'bold',
   },
 });

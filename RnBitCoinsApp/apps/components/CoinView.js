@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Button, ScrollView} from 'react-native';
 import CoinItem from './CoinItem';
 import axios from 'axios';
 
@@ -74,7 +74,12 @@ export default class CoinView extends Component {
           params: {limit: 10},
         } )
         .then((res) => {
-          console.log(res);
+         //console.log(res);
+         console.log('API 조회완료');
+         this.setState({
+           coinData:res.data.data,
+           isLoading: false,
+          });
         })
         .catch((err) => {
           console.error('getCoinData() : ', err);
@@ -101,11 +106,11 @@ export default class CoinView extends Component {
     });
 
     return (
-      <View>
+      <ScrollView>
         <Button title ="재조회" onPress={this.getCoinData} />
         <View style={styles.container}>{coinItem}</View>
-      </View>
-      );
+      </ScrollView>
+    );
   }
 }
 
