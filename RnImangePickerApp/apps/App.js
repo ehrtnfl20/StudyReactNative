@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Button, Image} from 'react-native';
 
+import ImagePicker from 'react-native-image-picker';
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -10,10 +12,23 @@ export default class App extends Component {
     };
   }
 
+  showPicker = () => {
+    const options = {
+      title: '이미지선택',
+      takePhotoButtonTitle: '카메라',
+      chooseFromLibraryButtonTitle: '저장소',
+      cancelButtonTitle: '취소',
+      // customButtons: [
+      //   {name: 'kb', title: '카카오톡 이미지 선택'},
+      // ],
+    };
+    ImagePicker.showImagePicker(options, () => {});
+  };
+
   render() {
     return (
       <View style={styles.body}>
-        <Button title="이미지 선택" />
+        <Button title="이미지 선택" onPress={this.showPicker} />
         <Text children={this.state.img.uri} style={styles.urlText} />
         <Image source={this.state.img} style={styles.image} />
       </View>
