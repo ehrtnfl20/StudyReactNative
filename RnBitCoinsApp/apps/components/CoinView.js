@@ -1,8 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
 import {View, StyleSheet, Button, ScrollView} from 'react-native';
-import CoinItem from './CoinItem';
 import axios from 'axios';
+
+import CoinItem from './CoinItem';
+import {getCoinIconUri} from '../data/constants';
+
 
 const sampleDate = [
   {
@@ -92,8 +95,8 @@ export default class CoinView extends Component {
   }
 
   render() {
-    let coinItem = sampleDate.map((itme, index) => {
-      const {cmc_rank, id, name, num_market_pairs, total_supply} = itme; //item 객체를 재구성
+    let coinItem = this.state.coinData.map((itme, index) => {
+      const {cmc_rank, name, num_market_pairs, total_supply, symbol} = itme; //item 객체를 재구성
 
       return (
         <CoinItem
@@ -101,7 +104,10 @@ export default class CoinView extends Component {
           name={name}
           rank={cmc_rank}
           price={num_market_pairs}
-          volumn={total_supply} />
+          volumn={total_supply}
+          symbol={symbol}
+          iconUri={getCoinIconUri(name)}
+        />
       );
     });
 

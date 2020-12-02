@@ -7,9 +7,10 @@ export default class CoinItem extends Component {
   }
 
   render() {
+    console.log('CoinItem : ', this.props.iconUri);
     return (
       <View style={styles.subContainer}>
-        <Image source={require('../images/bitcoin.png')} style={styles.coin} />
+        <Image source={{uri: this.props.iconUri}} style={styles.coin} />
         <View style={styles.coinDetail}>
           <Text children={this.props.name} style={styles.coinName} />
           <Text children={`vol: ${this.numberWithCommas(Number(this.props.volumn))}`} style={{color: 'gray'}} />
