@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor:'#cce6ff',
     },
-    text: { 
+    text: {
         fontSize: 24,
         color: '#000d1a',
     },
 });
+
 export default HomeScreen;
