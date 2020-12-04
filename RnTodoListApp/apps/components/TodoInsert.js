@@ -15,17 +15,10 @@ const TodoInsert = ({onAddTodo}) => {
     if (newTodoItem === '') { // 값이 없을때 추가되지 않도록 하는 기능(기술자의 매너)
       return;
     }
-    console.log(`newTodoItem ${newTodoItem}`);
+    //console.log(`newTodoItem ${newTodoItem}`);
     onAddTodo(newTodoItem.replace('\n', ''));  // 함수
     setNewTodoItem('');      // 빈 값으로 보내줌
   };
-
-
-  // const handleKeyPress = (e) => { // 리엑트에 필요한 기능 : 값을 넣고 'Enter'를 사용해서 자동입력되는 기능
-  //   if (e.nativeEvent.key === 'Enter') {
-  //     handleAddTodo();
-  //   }
-  // };
 
   return (
     <View style={styles.inputContainer}>

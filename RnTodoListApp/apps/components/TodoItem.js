@@ -2,26 +2,27 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
-//import Icon from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/AntDesign';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const TodoItem = ({id, textValue, checked, onRemove, onToggle}) => {
+const TodoItem = ({id, textValue, checked, onRemove, onToggle, content}) => {
     return (
         <View style={styles.itemContainer}>
-            <TouchableOpacity onPress={() => onToggle(id)}>
-                {checked ? (
+            <TouchableOpacity onPress={() => onToggle(id, checked)}>
+                {checked === 'true' ? (
                     <View style={styles.checkedCircle}>
                         <Icon name="check" size={30} color="#ff8080" />
                     </View>
                 ) : (
-                    <View style={styles.circle} />
+                    <View style={styles.circle}>
+                        <Icon name="check" size={30} color="#ff8080" />
+                    </View>
                 )}
             </TouchableOpacity>
             <Text
                 children={textValue}
                 style={[styles.itemText,
-                    checked ? styles.strikeText : styles.unstrikeText ]} />
+                    checked === 'true' ? styles.strikeText : styles.unstrikeText ]} />
             <TouchableOpacity onPress={() => onRemove(id)}>
                 <View style={styles.delete} >
                      <MatIcon name="delete-outline" size={30} color="#000066" />
