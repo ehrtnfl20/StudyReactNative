@@ -1,20 +1,88 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import {View, Text} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import React, { useEffect, useState } from 'react';
+import {PermissionsAndroid, Platform, Text, View} from 'react-native';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import Geolocation from 'react-native-geolocation-service';
+
+async function requestPermission() {
+  try {
+    if (Platform.OS === 'ios') {
+      return await Geolocation.requestAuthorization('always');
+    } else if (Platform.OS === 'android') {
+      return await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+    }
+  } catch (error) {
+    console.error(`error message: ${error}`);
+  }
+}
 
 export default function App() {
-  return (
-    <View style={{flex: 1}}>
-      <MapView style={{flex: 1, margin: 5}}
-         provider={PROVIDER_GOOGLE}
-         initialRegion={{
-          latitude: 35.093112,
-          longitude: 129.126615,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-      />
-    </View>
-  );
+
+  const [location, setLocation] = useState({});
+
+  useEffect(() => {
+    //초기값
+    var initVal = {
+      latitude: 37.578046,
+      longitude: 126.976987}; //경복궁 위치값
+    setLocation(initVal);
+
+    requestPermission()
+    .then((result) => {
+      console.log(result); //granted
+      if (result === 'granted') {
+        Geolocation.getCurrentPosition(
+          (pos) => {
+            setLocation(pos.coords);
+          },
+          (error) => {
+            console.error(`Position error : ${error}`);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 5000,
+          },
+        );
+        console.log(`latitude : ${location.latitude}`);
+        console.log(`longitude : ${location.latitude}`);
+      }
+    })
+    .catch(
+      (err) => console.error(`useEffect error : ${err}`)
+      );
+  }, []);
+
+  if (!location) {
+    return (
+      <View>
+        <Text children="GPS disabled" />
+      </View>
+    );
+  } else {
+    return (
+        <View style={{flex: 1}}>
+          <MapView style={{flex: 1, margin: 10}}
+            provider={PROVIDER_GOOGLE}
+            initialRegion={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+              latitudeDelta: 0.1,
+              longitudeDelta: 0.1,
+            }}>
+              <Marker
+                coordinate={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                }}
+                title="경복궁"
+                description="조선왕조 왕의 거처"
+                image={require('./images/pin.png')}
+              />
+          </MapView>
+        </View>
+    );
+  }
 }
