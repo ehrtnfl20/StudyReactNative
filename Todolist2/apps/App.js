@@ -11,7 +11,6 @@ import {openDatabase} from 'react-native-sqlite-storage';
 
 const db = openDatabase({name: 'todo.db'});
 
-​
 export default class App extends Component {
   constructor(props) {
     super(props);
